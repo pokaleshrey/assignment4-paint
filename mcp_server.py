@@ -171,26 +171,29 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
         # Get the Paint window
         paint_window = paint_app.window(class_name='MSPaintApp')
         
-        # Get primary monitor width to adjust coordinates
-        primary_width = GetSystemMetrics(0)
-        
         # Ensure Paint window is active
         if not paint_window.has_focus():
             paint_window.set_focus()
             time.sleep(0.2)
         
-        # Click on the Rectangle tool using the correct coordinates for secondary screen
-        paint_window.click_input(coords=(530, 82 ))
-        time.sleep(0.2)
+        # Click on the Rectangle tool
+        time.sleep(2.0)
+        paint_window.click_input(coords=(658, 105))
+        #paint_window.type_keys('p')
+        time.sleep(2.0)
         
-        # Get the canvas area
+        # Get the canvas area 
         canvas = paint_window.child_window(class_name='MSPaintView')
         
-        # Draw rectangle - coordinates should already be relative to the Paint window
-        # No need to add primary_width since we're clicking within the Paint window
-        canvas.press_mouse_input(coords=(x1+2560, y1))
-        canvas.move_mouse_input(coords=(x2+2560, y2))
-        canvas.release_mouse_input(coords=(x2+2560, y2))
+        # Draw rectangle using provided coordinates directly
+        canvas.click_input(coords=(x1, y1))
+        time.sleep(1.0)
+        canvas.press_mouse_input(coords=(x1, y1))
+        time.sleep(1.0)
+        canvas.move_mouse_input(coords=(x2, y2))
+        time.sleep(1.0)
+        canvas.release_mouse_input(coords=(x2, y2))
+        time.sleep(1.0)
         
         return {
             "content": [
@@ -233,29 +236,27 @@ async def add_text_in_paint(text: str) -> dict:
             paint_window.set_focus()
             time.sleep(0.5)
         
-        # Click on the Rectangle tool
-        paint_window.click_input(coords=(528, 92))
-        time.sleep(0.5)
+        # # Click on the Rectangle tool
+        # paint_window.click_input(coords=(658, 105))
+        # time.sleep(1.0)
         
         # Get the canvas area
         canvas = paint_window.child_window(class_name='MSPaintView')
         
         # Select text tool using keyboard shortcuts
         paint_window.type_keys('t')
-        time.sleep(0.5)
-        paint_window.type_keys('x')
-        time.sleep(0.5)
+        time.sleep(1.0)
         
         # Click where to start typing
-        canvas.click_input(coords=(810, 533))
-        time.sleep(0.5)
+        canvas.click_input(coords=(420, 450))
+        time.sleep(1.0)
         
         # Type the text passed from client
         paint_window.type_keys(text)
-        time.sleep(0.5)
+        time.sleep(1.0)
         
         # Click to exit text mode
-        canvas.click_input(coords=(1050, 800))
+        canvas.click_input(coords=(1700, 700))
         
         return {
             "content": [
