@@ -214,8 +214,8 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
         }
 
 @mcp.tool()
-async def add_text_in_paint(text: str) -> dict:
-    """Add text in Paint"""
+async def add_text_in_paint(text: str, x1: int, y1: int) -> dict:
+    """Add text in Paint at (x1,y1)"""
     global paint_app
     try:
         if not paint_app:
@@ -248,7 +248,7 @@ async def add_text_in_paint(text: str) -> dict:
         time.sleep(1.0)
         
         # Click where to start typing
-        canvas.click_input(coords=(420, 450))
+        canvas.click_input(coords=(x1, y1))
         time.sleep(1.0)
         
         # Type the text passed from client

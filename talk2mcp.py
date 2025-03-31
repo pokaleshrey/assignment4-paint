@@ -14,7 +14,7 @@ load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 
-max_iterations = 3
+max_iterations = 6
 last_response = None
 iteration = 0
 iteration_response = []
@@ -142,7 +142,8 @@ Examples:
 DO NOT include any explanations or additional text.
 Your entire response should be a single line starting with either FUNCTION_CALL: or FINAL_ANSWER:"""
 
-                query = """Find the ASCII values of characters in INDIA and then return sum of exponentials of those values. """
+                query = """Find the ASCII values of characters in INDIA and then return sum of exponentials of those values. Once this is done, Inside MSPaint app, draw a rectangle (200,300,800,800) and write the final answer inside this rectangle."""
+
                 print("Starting iteration loop...")
                 
                 # Use global iteration variables
@@ -268,32 +269,32 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
 
                     elif response_text.startswith("FINAL_ANSWER:"):
                         print("\n=== Agent Execution Complete ===")
-                        result = await session.call_tool("open_paint")
-                        print(result.content[0].text)
+                        # result = await session.call_tool("open_paint")
+                        # print(result.content[0].text)
 
-                        # Wait longer for Paint to be fully maximized
-                        await asyncio.sleep(1)
+                        # # Wait longer for Paint to be fully maximized
+                        # await asyncio.sleep(1)
 
-                        # Draw a rectangle
-                        result = await session.call_tool(
-                            "draw_rectangle",
-                            arguments={
-                                "x1": 225,
-                                "y1": 300,
-                                "x2": 800,
-                                "y2": 800
-                            }
-                        )
-                        print(result.content[0].text)
+                        # # Draw a rectangle
+                        # result = await session.call_tool(
+                        #     "draw_rectangle",
+                        #     arguments={
+                        #         "x1": 225,
+                        #         "y1": 300,
+                        #         "x2": 800,
+                        #         "y2": 800
+                        #     }
+                        # )
+                        # print(result.content[0].text)
 
-                        # Draw rectangle and add text
-                        result = await session.call_tool(
-                            "add_text_in_paint",
-                            arguments={
-                                "text": response_text
-                            }
-                        )
-                        print(result.content[0].text)
+                        # # Draw rectangle and add text
+                        # result = await session.call_tool(
+                        #     "add_text_in_paint",
+                        #     arguments={
+                        #         "text": response_text
+                        #     }
+                        # )
+                        # print(result.content[0].text)
                         break
 
                     iteration += 1
